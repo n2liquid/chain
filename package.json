@@ -1,0 +1,20 @@
+{
+  "name": "chain",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/n2liquid/chain.git"
+  },
+  "keywords": [
+    "text adventure",
+    "game"
+  ],
+  "author": "Guilherme Vieira (super.driver.512@gmail.com)",
+  "license": "AGPL-3.0+",
+  "bugs": {
+    "url": "https://github.com/n2liquid/chain/issues"
+  },
+  "homepage": "https://github.com/n2liquid/chain#readme",
+  "engines": {
+    "iojs": ">= 1.0.0"
+  }
+}

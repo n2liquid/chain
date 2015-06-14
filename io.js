@@ -3,6 +3,8 @@ let clear = require('clear');
 let read = require('./src/cli-read');
 let typeDelay = 50;
 let storedTypeDelays = [];
+let defaultInterlocutor = "????";
+let interlocutor;
 exports.clear = function() {
 	clear();
 	return 'done';
@@ -52,6 +54,23 @@ exports['@string'] = function(string, command) {
 	else {
 		return 'yield';
 	}
+};
+exports.who = function(who) {
+	interlocutor = who;
+	return 'done';
+};
+exports.dh = function() {
+	process.stdout.write (
+		"  " + (interlocutor || defaultInterlocutor) + ": "
+	);
+	return 'done';
+};
+exports.di = function() {
+	let whitespace = (
+		(interlocutor || defaultInterlocutor).replace(/./g, " ")
+	);
+	process.stdout.write("  " + whitespace + "  ");
+	return 'done';
 };
 exports.w = function(howLong, command) {
 	if(!command.startTimestamp) {

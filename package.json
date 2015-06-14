@@ -16,5 +16,8 @@
   "homepage": "https://github.com/n2liquid/chain#readme",
   "engines": {
     "iojs": ">= 1.0.0"
+  },
+  "dependencies": {
+    "lodash": "^3.9.3"
   }
 }

@@ -2,6 +2,8 @@
 
 CHAIN is a text adventure JavaScript library.
 
+Currently [io.js](https://iojs.org/)-only. Does not work on browsers.
+
 ## License
 
 ![](https://www.gnu.org/graphics/agplv3-155x51.png)

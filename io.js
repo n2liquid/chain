@@ -104,3 +104,45 @@ exports.read = function(question, command) {
 	});
 	return 'yield';
 };
+exports.choice = function(options, command) {
+	if(command.done) {
+		return 'done';
+	}
+	else
+	if(command.waiting) {
+		return 'yield';
+	}
+	command.waiting = true;
+	if(!command.question && command.question !== '') {
+		command.question = '> ';
+	}
+	read(command.question).then(function(value) {
+		let result;
+		if (
+			!options.some(function(option) {
+				if(option.default) {
+					result = option.fn(value);
+					return true;
+				}
+				let matchResults = option.matcher.exec(value);
+				if(!matchResults) {
+					return false;
+				}
+				result = option.fn.apply(option, matchResults);
+				return true;
+			})
+		) {
+			console.log("?");
+			return false;
+		}
+		return result;
+	}).done(function(result) {
+		if(result !== undefined && !result) {
+			command.waiting = false;
+		}
+		else {
+			command.done = true;
+		}
+	});
+	return 'yield';
+};

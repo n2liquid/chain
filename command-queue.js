@@ -33,9 +33,9 @@ function startIntervalIfNotActive() {
 			return;
 		}
 		let command = queue[0];
-		if(typeof(command) !== 'object') {
+		if(typeof command !== 'object') {
 			let commandObject = {};
-			commandObject['@' + typeof(command)] = command;
+			commandObject['@' + typeof command] = command;
 			queue[0] = command = commandObject;
 		}
 		let commandName = Object.keys(command)[0];

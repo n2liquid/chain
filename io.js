@@ -97,7 +97,7 @@ exports.read = function(question, command) {
 	}
 	let result = read(question);
 	if(command.deferred) {
-		result = command.deferred.resolve(result);
+		command.deferred.resolve(result);
 	}
 	result.done((function() {
 		this.done = true;

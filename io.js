@@ -33,22 +33,22 @@ exports.dd = function(amount) {
 		typeDelay = 0;
 	}
 };
-exports['@string'] = function(string, command) {
-	command.typeIndex = command.typeIndex || 0;
+exports['@string'] = function(string) {
+	this.typeIndex = this.typeIndex || 0;
 	if(typeDelay < 10) {
-		process.stdout.write(string.slice(command.typeIndex));
+		process.stdout.write(string.slice(this.typeIndex));
 		return 'done';
 	}
 	if (
-		command.typeIndex === 0
+		this.typeIndex === 0
 		|| (
-			Date.now() - command.lastTypeTimestamp >= typeDelay
+			Date.now() - this.lastTypeTimestamp >= typeDelay
 		)
 	) {
-		process.stdout.write(string[command.typeIndex++]);
-		command.lastTypeTimestamp = Date.now();
+		process.stdout.write(string[this.typeIndex++]);
+		this.lastTypeTimestamp = Date.now();
 	}
-	if(command.typeIndex >= string.length) {
+	if(this.typeIndex >= string.length) {
 		return 'done';
 	}
 	else {
@@ -72,11 +72,11 @@ exports.di = function() {
 	process.stdout.write("  " + whitespace + "  ");
 	return 'done';
 };
-exports.w = function(howLong, command) {
-	if(!command.startTimestamp) {
-		command.startTimestamp = Date.now();
+exports.w = function(howLong) {
+	if(!this.startTimestamp) {
+		this.startTimestamp = Date.now();
 	}
-	if(Date.now() - command.startTimestamp > howLong) {
+	if(Date.now() - this.startTimestamp > howLong) {
 		return 'done';
 	}
 	else {
@@ -84,14 +84,14 @@ exports.w = function(howLong, command) {
 	}
 };
 exports.read = function(question, command) {
-	if(command.done) {
+	if(this.done) {
 		return 'done';
 	}
 	else
-	if(command.waiting) {
+	if(this.waiting) {
 		return 'yield';
 	}
-	command.waiting = true;
+	this.waiting = true;
 	if(typeof question !== 'string') {
 		question = '> ';
 	}
@@ -99,20 +99,20 @@ exports.read = function(question, command) {
 	if(command.deferred) {
 		result = command.deferred.resolve(result);
 	}
-	result.done(function() {
-		command.done = true;
-	});
+	result.done((function() {
+		this.done = true;
+	}).bind(this));
 	return 'yield';
 };
 exports.choice = function(options, command) {
-	if(command.done) {
+	if(this.done) {
 		return 'done';
 	}
 	else
-	if(command.waiting) {
+	if(this.waiting) {
 		return 'yield';
 	}
-	command.waiting = true;
+	this.waiting = true;
 	if(!command.question && command.question !== '') {
 		command.question = '> ';
 	}
@@ -136,13 +136,13 @@ exports.choice = function(options, command) {
 			return false;
 		}
 		return result;
-	}).done(function(result) {
+	}).done((function(result) {
 		if(result !== undefined && !result) {
-			command.waiting = false;
+			this.waiting = false;
 		}
 		else {
-			command.done = true;
+			this.done = true;
 		}
-	});
+	}).bind(this));
 	return 'yield';
 };

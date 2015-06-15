@@ -26,6 +26,7 @@ function startIntervalIfNotActive() {
 	if(interval) {
 		return;
 	}
+	let commandState = {};
 	interval = setInterval(function() {
 		if(queue.length === 0) {
 			clearInterval(interval);
@@ -41,14 +42,20 @@ function startIntervalIfNotActive() {
 		let commandName = Object.keys(command)[0];
 		let mainCommandValue = command[commandName];
 		let commandHandler = commandHandlers[commandName];
-		let result = commandHandler(mainCommandValue, command);
+		let result = commandHandler.call (
+			commandState,
+			mainCommandValue,
+			command
+		);
 		switch(result) {
 			case 'yield':
 				break;
 			case 'done':
+				commandState = {};
 				queue.shift();
 				break;
 			default:
+				commandState = {};
 				dispatchOrThrow (
 					errorWithMetadata (
 						new Error (

@@ -20,13 +20,7 @@ exports.registerCommandHandler('@function', function(fn, command) {
 exports.enqueue = function() {
 	let commands = [].slice.call(arguments);
 	[].push.apply(queue, commands);
-	let deferred = Q.defer();
-	queue.push(function() {
-		deferred.resolve();
-		return 'done';
-	});
 	startIntervalIfNotActive();
-	return deferred.promise;
 };
 function startIntervalIfNotActive() {
 	if(interval) {

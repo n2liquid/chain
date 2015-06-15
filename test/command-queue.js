@@ -1,11 +1,11 @@
 'use strict';
 let commandQueue = require('../command-queue');
 console.log("Should count to 4:");
-commandQueue.enqueue(function() {
+commandQueue.push(function() {
 	console.log(1);
 	return 'done';
 });
-commandQueue.enqueue(function(command) {
+commandQueue.push(function(command) {
 	if(command.count === undefined) {
 		command.count = 0;
 	}
@@ -21,7 +21,7 @@ commandQueue.enqueue(function(command) {
 	console.log(3);
 	return 'done';
 });
-commandQueue.enqueue(function() {
+commandQueue.push(function() {
 	console.log(4);
 	return 'done';
 });

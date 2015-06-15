@@ -17,7 +17,7 @@ exports.removeCommandHandler = function(name) {
 exports.registerCommandHandler('@function', function(fn, command) {
 	return fn(command);
 });
-exports.enqueue = function() {
+exports.push = function() {
 	let commands = [].slice.call(arguments);
 	[].push.apply(queue, commands);
 	startIntervalIfNotActive();

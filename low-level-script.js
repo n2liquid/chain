@@ -26,6 +26,9 @@ exports.prototype.run = function(startingLabel) {
 		script.running = true;
 		while(!script.done) {
 			let nextCommand = getNextCommand(script);
+			if(!nextCommand) {
+				break;
+			}
 			yield executeCommand(script, nextCommand);
 		}
 		script.running = false;

@@ -5,8 +5,8 @@ let io = require('../io');
 _.each(io, function(handler, name) {
 	commandQueue.registerCommandHandler(name, handler);
 });
-let Script = require('../script');
-let script = new Script (
+let LowLevelScript = require('../low-level-script');
+let script = new LowLevelScript (
 	[
 		{clear:true},
 		"You've entered a hallway.",

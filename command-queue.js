@@ -42,6 +42,13 @@ function startIntervalIfNotActive() {
 		let commandName = Object.keys(command)[0];
 		let mainCommandValue = command[commandName];
 		let commandHandler = commandHandlers[commandName];
+		if(!commandHandler) {
+			throw errorWithMetadata (
+				new Error("Unknown command: " + commandName), {
+					command,
+				}
+			);
+		}
 		let result = commandHandler.call (
 			commandState,
 			mainCommandValue,

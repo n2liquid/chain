@@ -1,5 +1,6 @@
 'use strict';
 let fs = require('fs');
+let _ = require('lodash');
 let Q = require('q');
 let peg = require('pegjs');
 let errorWithMetadata = require('./util/error-with-metadata');
@@ -24,12 +25,22 @@ module.exports = function(source) {
 				script.labels[command.label] = postFilterIndex;
 				return false;
 			case 'choice':
+				if(command.choice.objectLiteral) {
+					command.choice.code = command.choice.objectLiteral;
+				}
 				command.choice = new Function (
-					'return [' + command.choice.code + '];'
+					'return (' + command.choice.code + ');'
 				)();
-				command.choice.forEach(function(option) {
-					option.fn = option.fn.bind(script);
-				});
+				if(Array.isArray(command.choice)) {
+					command.choice.forEach(function(option) {
+						option.fn = option.fn.bind(script);
+					});
+				}
+				else {
+					command.choice = _.mapValues(command.choice, function(fn) {
+						return fn.bind(script);
+					});
+				}
 				return true;
 			default:
 				return true;

@@ -15,24 +15,24 @@ let script = new Script (
 		"\n",
 		"\n - Go left",
 		"\n - Go right",
-		"\n - Quit",
+		"\n - Leave / Quit",
 		"\n\n",
 		{
 			choice: [
 				{
-					matcher: /^Go left$/i,
+					matcher: "Go left",
 					fn: function() {
 						script.goTo('left');
 					},
 				},
 				{
-					matcher: /^Go right$/i,
+					matcher: "Go right",
 					fn: function() {
 						script.goTo('right');
 					},
 				},
 				{
-					matcher: /^Quit$/i,
+					matcher: /^leave|quit$/i,
 					fn: function() {
 						script.exit();
 					},
@@ -46,7 +46,7 @@ let script = new Script (
 		{
 			choice: [
 				{
-					matcher: /^Go back$/i,
+					matcher: "Go back",
 					fn: function() {
 						script.goTo('center');
 					},
@@ -60,7 +60,7 @@ let script = new Script (
 		{
 			choice: [
 				{
-					matcher: /^Go back$/i,
+					matcher: "Go back",
 					fn: function() {
 						script.goTo('center');
 					},

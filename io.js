@@ -1,5 +1,6 @@
 'use strict';
 let clear = require('clear');
+let errorWithMetadata = require('./util/error-with-metadata');
 let read = require('./src/cli-read');
 let typeDelay = 50;
 let storedTypeDelays = [];
@@ -124,12 +125,31 @@ exports.choice = function(options, command) {
 					result = option.fn(value);
 					return true;
 				}
-				let matchResults = option.matcher.exec(value);
-				if(!matchResults) {
-					return false;
+				if(typeof option.matcher === 'string') {
+					if(value.trim().toLowerCase() === option.matcher.trim().toLowerCase()) {
+						result = option.fn(value);
+						return true;
+					}
+					else {
+						return false;
+					}
 				}
-				result = option.fn.apply(option, matchResults);
-				return true;
+				if(option.matcher instanceof RegExp) {
+					let matchResults = option.matcher.exec(value);
+					if(!matchResults) {
+						return false;
+					}
+					result = option.fn.apply(option, matchResults);
+					return true;
+				}
+				else {
+					throw errorWithMetadata (
+						new Error("Bad choice command option"), {
+							command: command,
+							option: option,
+						}
+					);
+				}
 			})
 		) {
 			console.log("?");

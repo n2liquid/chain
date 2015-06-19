@@ -4,20 +4,14 @@ The First Turnabout
 \{d30} - Back
  - Confirm
 
-\choice:```
-	{
-		matcher: "Back",
-		fn: () => {
-			this.exit();
-		},
+\choice:```{
+	Back: () => {
+		this.exit();
 	},
-	{
-		matcher: "Confirm",
-		fn: () => {
-			this.goTo('start');
-		},
+	Confirm: () => {
+		this.goTo('start');
 	},
-```
+}```
 
 \{label:"start"}\{clear}\{w1000}\{d0}Episode 1\{w1000}
 The First Turnabout\{w3000}

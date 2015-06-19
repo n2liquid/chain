@@ -1,4 +1,5 @@
 'use strict';
+let _ = require('lodash');
 let clear = require('clear');
 let errorWithMetadata = require('./util/error-with-metadata');
 let read = require('./src/cli-read');
@@ -116,6 +117,13 @@ exports.choice = function(options, command) {
 		return 'yield';
 	}
 	this.waiting = true;
+	if(!Array.isArray(options)) {
+		let optionsObject = options;
+		options = [];
+		_.each(optionsObject, function(fn, matcher) {
+			options.push({ matcher, fn });
+		});
+	}
 	if(!command.question && command.question !== '') {
 		command.question = '> ';
 	}

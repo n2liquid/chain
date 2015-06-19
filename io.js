@@ -27,12 +27,14 @@ exports.d = function(delay) {
 };
 exports.id = function(amount) {
 	typeDelay += amount;
+	return 'done';
 };
 exports.dd = function(amount) {
 	typeDelay -= amount;
 	if(typeDelay < 0) {
 		typeDelay = 0;
 	}
+	return 'done';
 };
 exports['@string'] = function(string) {
 	this.typeIndex = this.typeIndex || 0;

@@ -1,0 +1,35 @@
+\{clear}\{d40}Episode 1
+The First Turnabout
+
+\{d30} - Back
+ - Confirm
+
+\choice:```
+	{
+		matcher: "Back",
+		fn: () => {
+			this.exit();
+		},
+	},
+	{
+		matcher: "Confirm",
+		fn: () => {
+			this.goTo('start');
+		},
+	},
+```
+
+\{label:"start"}\{clear}\{w1000}\{d0}Episode 1\{w1000}
+The First Turnabout\{w3000}
+
+\{label:"m1000"}\{d100}Inside the compressing walls of a small apartment,\{w250} blood
+runs all over a small statue held upside down by a man.\{w1000}
+
+\{label:"m2000"}The blood drips from it to the wooden floor beside a fine lady's
+\{id100}dead body...\{w3000}
+
+\{label:"m3000"}\{who:null}\{d30}\{dh}*gasp*...\{w750} *gasp*...\{w1500}
+\{d10}\{di}Dammit!\{w1250}
+\{d300}\{di}. . .\{w1000}\{d30} Why me?\{w1500}
+\{d50}\{di}I can't get caught...\{w1500}
+\{d10}\{di}Not like this!\{w2000}

@@ -52,7 +52,9 @@ function executeCommand(script, command) {
 	return deferred.promise;
 }
 exports.prototype.goTo = function(labelName) {
-	this.jumping = true;
+	if(this.running) {
+		this.jumping = true;
+	}
 	let label = this.labels[labelName];
 	if(label === undefined) {
 		throw errorWithMetadata (

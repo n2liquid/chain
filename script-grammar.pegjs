@@ -104,7 +104,7 @@ null
 
 objectLiteral
   = '```{' v:$((!'}```' .)+) '}```' {
-        return { objectLiteral: v };
+        return { objectLiteral: '{' + v + '}' };
     }
 
 jsBlock

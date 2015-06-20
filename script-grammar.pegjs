@@ -60,6 +60,7 @@ value
   / string
   / boolean
   / null
+  / identifier
   / objectLiteral
   / jsBlock
 

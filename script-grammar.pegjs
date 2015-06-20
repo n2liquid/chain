@@ -11,27 +11,12 @@ token
   / stringToken
 
 commandToken
-  = commandTokenPrefix v:commandToken_ {
+  = !'\\' '<' v:keyValueList '>' {
         var token = {};
         v.forEach(function(kv) {
             token[kv.key] = kv.value;
         });
         return token;
-    }
-
-commandToken_
-  = simpleCommandToken
-  / boundedCommandToken
-
-commandTokenPrefix 'backslash'
-  = '\\' !'\\'
-
-simpleCommandToken
-  = keyValueList
-
-boundedCommandToken
- = '{' v:keyValueList '}' {
-        return v;
     }
 
 keyValueList
@@ -113,4 +98,14 @@ jsBlock
     }
 
 stringToken
-  = $(('\\\\' / (!'\\' .))+)
+  = v:(escapedLessThanSign / otherStringTokenCharacter)+ {
+	    return v.join('');
+    }
+
+escapedLessThanSign
+  = '<<' {
+	    return '<';
+    }
+
+otherStringTokenCharacter
+  = $(!'<' .)

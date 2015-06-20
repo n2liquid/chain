@@ -18,7 +18,13 @@ module.exports = function(source) {
 	script.commands = parse(source).filter((command, i) => {
 		let postFilterIndex = i - filterCount;
 		if(typeof command !== 'object') {
-			return true;
+			if(command === '') {
+				++filterCount;
+				return false;
+			}
+			else {
+				return true;
+			}
 		}
 		let commandName = Object.keys(command)[0];
 		switch(commandName) {

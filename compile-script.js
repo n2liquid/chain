@@ -14,8 +14,9 @@ let parse = peg.buildParser (
 ).parse;
 module.exports = function(source) {
 	let script = new LowLevelScript();
+	let filterCount = 0;
 	script.commands = parse(source).filter((command, i) => {
-		let postFilterIndex = i - Object.keys(script.labels).length;
+		let postFilterIndex = i - filterCount;
 		if(typeof command !== 'object') {
 			return true;
 		}
@@ -23,6 +24,7 @@ module.exports = function(source) {
 		switch(commandName) {
 			case 'label':
 				script.labels[command.label] = postFilterIndex;
+				++filterCount;
 				return false;
 			case 'choice':
 				if(command.choice.objectLiteral) {

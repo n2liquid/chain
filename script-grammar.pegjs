@@ -102,8 +102,23 @@ jsBlock
     }
 
 stringToken
-  = v:(escapedLessThanSign / otherStringTokenCharacter)+ {
+  = v:(
+        escapedBackslashBeforeLineBreak
+        / escapedLineBreak
+        / escapedLessThanSign
+        / otherStringTokenCharacter
+    )+ {
 	    return v.join('');
+    }
+
+escapedBackslashBeforeLineBreak
+  = '\\\\' &'\n' {
+	    return '\\';
+    }
+
+escapedLineBreak
+  = '\\\n' {
+	    return '';
     }
 
 escapedLessThanSign

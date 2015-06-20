@@ -30,9 +30,12 @@ keyValue
   / keyFlag
 
 keyNumberValue
-  = key:identifier value:number {
+  = key:keyNumberValueIdentifier value:number {
         return { key, value };
     }
+
+keyNumberValueIdentifier
+  = $([a-zA-Z]+)
 
 keyAnyValue
   = key:identifier ':' value:value {
@@ -45,7 +48,7 @@ keyFlag
     }
 
 identifier 'identifier'
-  = $([a-zA-Z]+)
+  = $([a-zA-Z][a-zA-Z0-9]*)
 
 number 'number'
   = v:$([0-9]+('.' [0-9]+)?) {

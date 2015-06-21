@@ -14,8 +14,7 @@ let parse = peg.buildParser (
 ).parse;
 module.exports = function(source) {
 	let script = new LowLevelScript();
-	let commands = script.commands = parse(source);
-	commands.forEach((command, i) => {
+	script.commands = parse(source).map((command, i) => {
 		if(typeof command !== 'object') {
 			let commandObject = {};
 			commandObject['@' + typeof command] = command;
@@ -36,6 +35,7 @@ module.exports = function(source) {
 				)();
 				break;
 		}
+		return command;
 	});
 	return script;
 };

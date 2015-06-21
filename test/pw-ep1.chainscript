@@ -1,4 +1,4 @@
-<clear><d40>\
+<label:repeat><clear><d40>\
 Episode 1
 The First Turnabout
 
@@ -33,3 +33,7 @@ The blood drips from it to the wooden floor beside a fine lady's
 <d300><di>. . .<w1000><d30> Why me?<w1500>
 <d50><di>I can't get caught...<w1500>
 <d10><di>Not like this!<w2000>
+
+<js:```
+	this.goTo('repeat');
+```>

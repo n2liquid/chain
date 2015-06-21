@@ -26,6 +26,18 @@ module.exports = function(source) {
 			case 'label':
 				script.labels[command.label] = i;
 				break;
+			case 'js': {
+				let fn = new Function(command.js.code);
+				let fnCommand = {
+					'@function': (function() {
+						fn.call(this);
+						return 'done';
+					})
+				};
+				delete command.js;
+				command = _.merge(fnCommand, command);
+				break;
+			}
 			case 'choice':
 				if(command.choice.objectLiteral) {
 					command.choice.code = command.choice.objectLiteral;

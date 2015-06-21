@@ -7,6 +7,7 @@ _.each(io, function(handler, name) {
 });
 commandQueue.push (
 	"This is a test...", {w:1000},
+	"",
 	{d:100}, " Slower...", {w:1000},
 	{ds:true}, {d:10}, "\nTAKE THAT!", {w:1000},
 	{dr:true}, "\nSlow speed restored...?", {w:1000},

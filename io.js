@@ -39,6 +39,9 @@ exports.dd = function(amount) {
 };
 exports['@string'] = function(string) {
 	this.typeIndex = this.typeIndex || 0;
+	if(this.typeIndex >= string.length) {
+		return 'done';
+	}
 	if(typeDelay < 10) {
 		process.stdout.write(string.slice(this.typeIndex));
 		return 'done';
@@ -52,12 +55,7 @@ exports['@string'] = function(string) {
 		process.stdout.write(string[this.typeIndex++]);
 		this.lastTypeTimestamp = Date.now();
 	}
-	if(this.typeIndex >= string.length) {
-		return 'done';
-	}
-	else {
-		return 'yield';
-	}
+	return 'yield';
 };
 exports.who = function(who) {
 	interlocutor = who;

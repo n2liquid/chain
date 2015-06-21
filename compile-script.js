@@ -17,7 +17,9 @@ module.exports = function(source) {
 	let commands = script.commands = parse(source);
 	commands.forEach((command, i) => {
 		if(typeof command !== 'object') {
-			return;
+			let commandObject = {};
+			commandObject['@' + typeof command] = command;
+			command = commandObject;
 		}
 		let commandName = Object.keys(command)[0];
 		switch(commandName) {

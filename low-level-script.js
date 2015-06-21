@@ -13,6 +13,12 @@ commandQueue.registerCommandHandler (
 		return 'done';
 	}
 );
+commandQueue.registerCommandHandler (
+	'exit', function(unused, command) {
+		command.context.exit();
+		return 'done';
+	}
+);
 exports = module.exports = function(commands, more) {
 	more = more || {};
 	this.commands = commands;

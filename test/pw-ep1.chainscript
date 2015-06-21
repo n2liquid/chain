@@ -34,6 +34,4 @@ The blood drips from it to the wooden floor beside a fine lady's
 <d50><di>I can't get caught...<w1500>
 <d10><di>Not like this!<w2000>
 
-<js:```
-	this.goTo('repeat');
-```>
+<goTo:repeat>

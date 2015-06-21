@@ -7,6 +7,12 @@ commandQueue.registerCommandHandler (
 		return 'done';
 	}
 );
+commandQueue.registerCommandHandler (
+	'goTo', function(label, command) {
+		command.context.goTo(label);
+		return 'done';
+	}
+);
 exports = module.exports = function(commands, more) {
 	more = more || {};
 	this.commands = commands;

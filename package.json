@@ -1,5 +1,6 @@
 {
   "name": "chain",
+  "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/n2liquid/chain.git"

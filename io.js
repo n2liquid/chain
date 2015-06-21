@@ -135,7 +135,7 @@ exports.choice = function(options, command) {
 				}
 				if(typeof option.matcher === 'string') {
 					if(value.trim().toLowerCase() === option.matcher.trim().toLowerCase()) {
-						result = option.fn(value);
+						result = option.fn.call(command.context, value);
 						return true;
 					}
 					else {
@@ -147,7 +147,7 @@ exports.choice = function(options, command) {
 					if(!matchResults) {
 						return false;
 					}
-					result = option.fn.apply(option, matchResults);
+					result = option.fn.apply(command.context, matchResults);
 					return true;
 				}
 				else {

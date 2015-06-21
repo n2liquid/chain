@@ -28,43 +28,43 @@ function startIntervalIfNotActive() {
 	}
 	let commandState = {};
 	interval = setInterval(function() {
-		if(queue.length === 0) {
-			clearInterval(interval);
-			interval = null;
-			return;
-		}
-		let command = queue[0];
-		if(typeof command !== 'object') {
-			let commandObject = {};
-			commandObject['@' + typeof command] = command;
-			queue[0] = command = commandObject;
-		}
-		let commandName = Object.keys(command)[0];
-		let mainCommandValue = command[commandName];
-		let commandHandler = commandHandlers[commandName];
-		if(!commandHandler) {
-			throw errorWithMetadata (
-				new Error("Unknown command: " + commandName), {
-					command,
-				}
+		try {
+			if(queue.length === 0) {
+				clearInterval(interval);
+				interval = null;
+				return;
+			}
+			let command = queue[0];
+			if(typeof command !== 'object') {
+				let commandObject = {};
+				commandObject['@' + typeof command] = command;
+				queue[0] = command = commandObject;
+			}
+			let commandName = Object.keys(command)[0];
+			let mainCommandValue = command[commandName];
+			let commandHandler = commandHandlers[commandName];
+			if(!commandHandler) {
+				throw errorWithMetadata (
+					new Error("Unknown command: " + commandName), {
+						command,
+					}
+				);
+			}
+			let result = commandHandler.call (
+				commandState,
+				mainCommandValue,
+				command
 			);
-		}
-		let result = commandHandler.call (
-			commandState,
-			mainCommandValue,
-			command
-		);
-		switch(result) {
-			case 'yield':
-				break;
-			case 'done':
-				commandState = {};
-				queue.shift();
-				break;
-			default:
-				commandState = {};
-				dispatchOrThrow (
-					errorWithMetadata (
+			switch(result) {
+				case 'yield':
+					break;
+				case 'done':
+					commandState = {};
+					queue.shift();
+					break;
+				default:
+					commandState = {};
+					throw errorWithMetadata (
 						new Error (
 							"Unexpected command handler result: '" + result + "'"
 							+ " (command: '" + command + "')"
@@ -73,9 +73,12 @@ function startIntervalIfNotActive() {
 							commandHandler,
 							queue,
 						}
-					)
-				);
-				break;
+					);
+					break;
+			}
+		}
+		catch(error) {
+			dispatchOrThrow(error);
 		}
 	}, 0);
 }

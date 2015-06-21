@@ -34,16 +34,6 @@ module.exports = function(source) {
 				command.choice = new Function (
 					'return (' + command.choice.code + ');'
 				)();
-				if(Array.isArray(command.choice)) {
-					command.choice.forEach(function(option) {
-						option.fn = option.fn.bind(script);
-					});
-				}
-				else {
-					command.choice = _.mapValues(command.choice, function(fn) {
-						return fn.bind(script);
-					});
-				}
 				break;
 		}
 	});

@@ -14,18 +14,15 @@ let parse = peg.buildParser (
 ).parse;
 module.exports = function(source) {
 	let script = new LowLevelScript();
-	let filterCount = 0;
 	script.commands = parse(source).filter((command, i) => {
-		let postFilterIndex = i - filterCount;
 		if(typeof command !== 'object') {
 			return true;
 		}
 		let commandName = Object.keys(command)[0];
 		switch(commandName) {
 			case 'label':
-				script.labels[command.label] = postFilterIndex;
-				++filterCount;
-				return false;
+				script.labels[command.label] = i;
+				return true;
 			case 'choice':
 				if(command.choice.objectLiteral) {
 					command.choice.code = command.choice.objectLiteral;

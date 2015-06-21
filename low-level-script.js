@@ -2,6 +2,11 @@
 let Q = require('q');
 let errorWithMetadata = require('./util/error-with-metadata');
 let commandQueue = require('./command-queue');
+commandQueue.registerCommandHandler (
+	'label', function() {
+		return 'done';
+	}
+);
 exports = module.exports = function(commands, more) {
 	more = more || {};
 	this.commands = commands;

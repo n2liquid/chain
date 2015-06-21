@@ -15,7 +15,7 @@ exports.removeCommandHandler = function(name) {
 	delete commandHandlers[name];
 };
 exports.registerCommandHandler('@function', function(fn, command) {
-	return fn(command);
+	return fn.call(command.context, command);
 });
 exports.push = function() {
 	let commands = [].slice.call(arguments);

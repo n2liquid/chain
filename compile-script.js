@@ -21,6 +21,7 @@ module.exports = function(source) {
 			commandObject['@' + typeof command] = command;
 			command = commandObject;
 		}
+		command.context = script;
 		let commandName = Object.keys(command)[0];
 		switch(commandName) {
 			case 'label':

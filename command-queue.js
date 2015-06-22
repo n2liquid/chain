@@ -1,4 +1,5 @@
 'use strict';
+let _ = require('lodash');
 let Q = require('q');
 let errorWithMetadata = require('./util/error-with-metadata');
 let commandHandlers = {};
@@ -11,8 +12,18 @@ exports.setErrorHandler = function(handler) {
 exports.registerCommandHandler = function(name, handler) {
 	commandHandlers[name] = handler;
 };
+exports.registerCommandHandlers = function(handlers) {
+	_.each(handlers, function(handler, name) {
+		exports.registerCommandHandler(name, handler);
+	});
+};
 exports.removeCommandHandler = function(name) {
 	delete commandHandlers[name];
+};
+exports.removeCommandHandlers = function(handlers) {
+	Object.keys(handlers).forEach(function(name) {
+		exports.removeCommandHandler(name);
+	});
 };
 exports.registerCommandHandler('@function', function(fn, command) {
 	return fn.call(command.context, command);

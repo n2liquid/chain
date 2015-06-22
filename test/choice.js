@@ -1,10 +1,6 @@
 'use strict';
-let _ = require('lodash');
 let commandQueue = require('../command-queue');
-let io = require('../io');
-_.each(io, function(handler, name) {
-	commandQueue.registerCommandHandler(name, handler);
-});
+commandQueue.registerCommandHandlers(require('../io'));
 commandQueue.push (
 	{
 		choice: [

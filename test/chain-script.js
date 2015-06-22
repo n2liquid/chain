@@ -1,11 +1,7 @@
 'use strict';
 let fs = require('fs');
-let _ = require('lodash');
 let commandQueue = require('../command-queue');
-let io = require('../io');
-_.each(io, function(handler, name) {
-	commandQueue.registerCommandHandler(name, handler);
-});
+commandQueue.registerCommandHandlers(require('../io'));
 let compile = require('../compile-script');
 let script = compile (
 	fs.readFileSync (

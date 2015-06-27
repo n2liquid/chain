@@ -25,9 +25,10 @@ exports = module.exports = function(question) {
 	});
 	return deferred.promise;
 };
+exports.quitOnSigint = true;
 exports.emitWhileReading = true;
 process.stdin.on('data', function(data) {
-	if(data === '\x03') {
+	if(data === '\x03' && exports.quitOnSigint) {
 		process.stdout.write('\n');
 		process.exit();
 	}

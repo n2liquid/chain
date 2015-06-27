@@ -3,7 +3,10 @@ let Q = require('q');
 let errorWithMetadata = require('./util/error-with-metadata');
 let commandQueue = require('./command-queue');
 commandQueue.registerCommandHandler (
-	'label', function() {
+	'label', function(name, command) {
+		if(!command['no-progress']) {
+			command.context.latestLabel = name;
+		}
 		return 'done';
 	}
 );

@@ -5,12 +5,13 @@ let errorWithMetadata = require('./util/error-with-metadata');
 let read = require('./src/cli-read');
 let typeDelay = 50;
 let storedTypeDelays = [];
+let noSkip = false;
 let skipping = false;
 let defaultInterlocutor = "????";
 let interlocutor;
 let lastInterlocutor;
 read.on('data', function(data) {
-	if(data === '\r') {
+	if(data === '\r' && !noSkip) {
 		skipping = true;
 	}
 });
@@ -104,6 +105,14 @@ exports.w = function(howLong) {
 	else {
 		return 'yield';
 	}
+};
+exports['no-skip'] = function(value) {
+	noSkip = value;
+	return 'done';
+};
+exports['allow-skip'] = function(value) {
+	noSkip = !value;
+	return 'done';
 };
 exports.p = function(howLong) {
 	if(!this.startTimestamp) {

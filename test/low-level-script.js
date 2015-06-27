@@ -6,9 +6,9 @@ let LowLevelScript = require('../low-level-script');
 let script = new LowLevelScript (
 	[
 		{clear:true},
-		"You've entered a hallway.",
+		"You've entered a hallway.", {p:true},
 		"\n",
-		"The hallway door is just behind you.",
+		"The hallway door is just behind you.", {p:true},
 		"\n",
 		"\n - Go left",
 		"\n - Go right",
@@ -36,7 +36,7 @@ let script = new LowLevelScript (
 				},
 			]
 		},
-		"\nYou went left, but there's nothing here.",
+		"\nYou went left, but there's nothing here.", {p:true},
 		"\n",
 		"\n - Go back",
 		"\n\n",
@@ -50,7 +50,7 @@ let script = new LowLevelScript (
 				},
 			],
 		},
-		"\nYou went right, but you see nothing interesting.",
+		"\nYou went right, but you see nothing interesting.", {p:true},
 		"\n",
 		"\n - Go back",
 		"\n\n",
@@ -66,9 +66,9 @@ let script = new LowLevelScript (
 		},
 	], {
 		labels: {
-			center: 2,
-			left: 10,
-			right: 15,
+			center: 3,
+			left: 12,
+			right: 18,
 		},
 	}
 );

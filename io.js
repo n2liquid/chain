@@ -5,9 +5,15 @@ let errorWithMetadata = require('./util/error-with-metadata');
 let read = require('./src/cli-read');
 let typeDelay = 50;
 let storedTypeDelays = [];
+let skipping = false;
 let defaultInterlocutor = "????";
 let interlocutor;
 let lastInterlocutor;
+read.on('data', function(data) {
+	if(data === '\r') {
+		skipping = true;
+	}
+});
 exports.clear = function() {
 	clear();
 	return 'done';
@@ -43,7 +49,7 @@ exports['@string'] = function(string) {
 	if(this.typeIndex >= string.length) {
 		return 'done';
 	}
-	if(typeDelay < 10) {
+	if(skipping || typeDelay < 10) {
 		process.stdout.write(string.slice(this.typeIndex));
 		return 'done';
 	}
@@ -86,6 +92,9 @@ exports.adp = function() {
 	}
 };
 exports.w = function(howLong) {
+	if(skipping) {
+		return 'done';
+	}
 	if(!this.startTimestamp) {
 		this.startTimestamp = Date.now();
 	}
@@ -96,8 +105,28 @@ exports.w = function(howLong) {
 		return 'yield';
 	}
 };
+exports.p = function(howLong) {
+	if(!this.startTimestamp) {
+		this.startTimestamp = Date.now();
+		skipping = false;
+	}
+	if (
+		skipping
+		|| (
+			howLong !== true
+			&& Date.now() - this.startTimestamp > howLong
+		)
+	) {
+		skipping = false;
+		return 'done';
+	}
+	else {
+		return 'yield';
+	}
+};
 exports.read = function(question, command) {
 	if(this.done) {
+		skipping = false;
 		return 'done';
 	}
 	else
@@ -119,6 +148,7 @@ exports.read = function(question, command) {
 };
 exports.choice = function(options, command) {
 	if(this.done) {
+		skipping = false;
 		return 'done';
 	}
 	else

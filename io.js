@@ -7,6 +7,7 @@ let typeDelay = 50;
 let storedTypeDelays = [];
 let defaultInterlocutor = "????";
 let interlocutor;
+let lastInterlocutor;
 exports.clear = function() {
 	clear();
 	return 'done';
@@ -58,10 +59,12 @@ exports['@string'] = function(string) {
 	return 'yield';
 };
 exports.who = function(who) {
+	lastInterlocutor = interlocutor;
 	interlocutor = who;
 	return 'done';
 };
 exports.dh = function() {
+	lastInterlocutor = interlocutor;
 	process.stdout.write (
 		"  " + (interlocutor || defaultInterlocutor) + ": "
 	);
@@ -73,6 +76,14 @@ exports.di = function() {
 	);
 	process.stdout.write("  " + whitespace + "  ");
 	return 'done';
+};
+exports.adp = function() {
+	if(interlocutor !== lastInterlocutor) {
+		return exports.dh();
+	}
+	else {
+		return exports.di();
+	}
 };
 exports.w = function(howLong) {
 	if(!this.startTimestamp) {

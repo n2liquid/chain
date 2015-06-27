@@ -15,5 +15,8 @@ commandQueue.push (
 	{d:50}, "\n", {di:true}, "Seems legit!", {w:1000},
 	"\n", {d:100}, {di:true}, "It seems you are...", {w:2000},
 	{d:0}, " NOT", {w:1000}, " GUILTY.", {w:1000},
+	{d:30}, "\n\n", {adp:true}, "I'm the judge...", {w:500},
+	"\n\n", {who:"Phoenix"}, {adp:true}, "I'm Phoenix Wright...", {w:500},
+	"\n", {adp:true}, "I'm always Wright...", {w:500},
 	"\n"
 );

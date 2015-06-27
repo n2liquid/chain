@@ -39,6 +39,7 @@ exports.prototype.run = function(startingLabel) {
 			"The script is already running"
 		);
 	}
+	this.rewind();
 	if(startingLabel) {
 		this.goTo(startingLabel);
 	}

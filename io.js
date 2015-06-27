@@ -7,12 +7,18 @@ let typeDelay = 50;
 let storedTypeDelays = [];
 let noSkip = false;
 let skipping = false;
+let continue_ = false;
 let defaultInterlocutor = "????";
 let interlocutor;
 let lastInterlocutor;
 read.on('data', function(data) {
-	if(data === '\r' && !noSkip) {
-		skipping = true;
+	if(data === '\r') {
+		if(!noSkip) {
+			skipping = true;
+		}
+		else {
+			continue_ = true;
+		}
 	}
 });
 exports.clear = function() {
@@ -117,16 +123,17 @@ exports['allow-skip'] = function(value) {
 exports.p = function(howLong) {
 	if(!this.startTimestamp) {
 		this.startTimestamp = Date.now();
-		skipping = false;
+		continue_ = skipping = false;
 	}
 	if (
 		skipping
+		|| continue_
 		|| (
 			howLong !== true
 			&& Date.now() - this.startTimestamp > howLong
 		)
 	) {
-		skipping = false;
+		continue_ = skipping = false;
 		return 'done';
 	}
 	else {

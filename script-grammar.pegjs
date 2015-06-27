@@ -48,7 +48,7 @@ keyFlag
     }
 
 identifier 'identifier'
-  = $([a-zA-Z][a-zA-Z0-9]*)
+  = $([a-zA-Z]('-'* [a-zA-Z0-9])*)
 
 number 'number'
   = v:$([0-9]+('.' [0-9]+)?) {

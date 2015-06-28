@@ -36,7 +36,7 @@ commandMappers.label = function(command, commandOffset) {
 	return command;
 };
 commandMappers.js = function(command) {
-	let fn = new Function(command.js.code);
+	let fn = new Function('"use strict";\n' + command.js.code);
 	let fnCommand = {
 		'@function': (function() {
 			fn.call(this);
@@ -51,7 +51,7 @@ commandMappers.choice = function(command) {
 		command.choice.code = command.choice.objectLiteral;
 	}
 	command.choice = new Function (
-		'return (' + command.choice.code + ');'
+		'"use strict"; return (' + command.choice.code + ');'
 	)();
 	return command;
 };

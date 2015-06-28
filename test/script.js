@@ -2,8 +2,8 @@
 let _ = require('lodash');
 let commandQueue = require('../command-queue');
 commandQueue.registerCommandHandlers(require('../io'));
-let LowLevelScript = require('../low-level-script');
-let script = new LowLevelScript (
+let Script = require('../script');
+let script = new Script (
 	[
 		{clear:true},
 		"You've entered a hallway.", {p:true},

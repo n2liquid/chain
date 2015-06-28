@@ -4,7 +4,7 @@ let _ = require('lodash');
 let Q = require('q');
 let peg = require('pegjs');
 let errorWithMetadata = require('./util/error-with-metadata');
-let LowLevelScript = require('./low-level-script');
+let Script = require('./script');
 let commandMappers = {};
 let parse = peg.buildParser (
 	fs.readFileSync (
@@ -14,7 +14,7 @@ let parse = peg.buildParser (
 	)
 ).parse;
 module.exports = function(source) {
-	let script = new LowLevelScript();
+	let script = new Script();
 	script.commands = parse(source).map((command, i) => {
 		if(typeof command !== 'object') {
 			let commandObject = {};

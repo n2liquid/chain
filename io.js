@@ -187,7 +187,7 @@ exports.choice = function(options, command) {
 		if (
 			!options.some(function(option) {
 				if(option.default) {
-					result = option.fn(value);
+					result = option.fn.call(command.context, value);
 					return true;
 				}
 				if(typeof option.matcher === 'string') {
